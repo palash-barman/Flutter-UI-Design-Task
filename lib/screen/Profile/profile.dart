@@ -6,6 +6,7 @@ import 'package:flutter_ui_design_task/utilities/custom_padding.dart';
 import 'package:flutter_ui_design_task/utilities/icons.dart';
 import 'package:flutter_ui_design_task/utilities/images.dart';
 import 'package:flutter_ui_design_task/utilities/text_style.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -20,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
             children: [
               const SizedPad(size: 61),
               Container(
-                height: 70.h,
+               
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 13.h),
                 decoration: BoxDecoration(
@@ -32,58 +33,88 @@ class ProfileScreen extends StatelessWidget {
                           blurRadius: 6,
                           offset: const Offset(0, 2))
                     ]),
-                child: Row(
+                child: Column(
                   children: [
-                    CircleAvatar(
-                      radius: 25.r,
-                      backgroundImage: AssetImage(AppImages.person),
-                    ),
-                    SizedBox(
-                      width: 16.w,
-                    ),
-                    Expanded(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Palash Chandra Barman",
-                          style: CustomTextStyle.h4(
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.headerTextColor),
-                        ),
-                        Text(
-                          "palash900202@gmail.com",
-                          style: CustomTextStyle.h6(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.greyTextColor),
-                        ),
-                      ],
-                    )),
-                    Stack(
-                      alignment: Alignment.topRight,
+                    Row(
                       children: [
                         CircleAvatar(
-                            radius: 35.r,
-                            backgroundColor: const Color(0xFFF9F9F9),
-                            child: Icon(
-                              Icons.notifications_outlined,
-                              color: AppColors.greyTextColor,
-                              size: 15.r,
-                            )),
-                        Positioned(
-                            right: 5,
-                            child: CircleAvatar(
-                              backgroundColor: const Color(0xFFF24F4F),
-                              radius: 8.r,
-                              child: Text(
-                                "2",
-                                style: CustomTextStyle.customSize(
-                                    size: 8.sp, fontWeight: FontWeight.w500),
-                              ),
-                            ))
+                          radius: 25.r,
+                          backgroundImage: AssetImage(AppImages.person),
+                        ),
+                        SizedBox(
+                          width: 16.w,
+                        ),
+                        Expanded(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Palash Chandra Barman",
+                              style: CustomTextStyle.h4(
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.headerTextColor),maxLines: 1,overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              "palash900202@gmail.com",
+                              style: CustomTextStyle.h6(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.greyTextColor),
+                                  maxLines: 1,overflow: TextOverflow.ellipsis
+                            ),
+                          ],
+                        )),
+                        Stack(
+                          alignment: Alignment.topRight,
+                          children: [
+                            CircleAvatar(
+                                radius: 22.r,
+                                backgroundColor: const Color(0xFFF9F9F9),
+                                child: Icon(
+                                  Icons.notifications_outlined,
+                                  color: AppColors.greyTextColor,
+                                  size: 15.r,
+                                )),
+                            Positioned(
+                               
+                                child: CircleAvatar(
+                                  backgroundColor: const Color(0xFFF24F4F),
+                                  radius: 8.r,
+                                  child: Text(
+                                    "2",
+                                    style: CustomTextStyle.customSize(
+                                        size: 8.sp, fontWeight: FontWeight.w500),
+                                  ),
+                                ))
+                          ],
+                        )
                       ],
+                    ),
+
+                    ListTile(
+                      dense: true,
+                      minVerticalPadding: 0,
+                      horizontalTitleGap: 10,
+                      contentPadding: EdgeInsets.zero,
+                      minLeadingWidth: 0,
+                      leading: Icon(Icons.call,color: AppColors.mainColor,),
+                      title: Text("01796165636",style:CustomTextStyle.customSize(
+            size: 18.sp, color: const Color(0xFF374151)),),
+            trailing: CustomButton(text: "Call", ontap: ()async{
+
+              Uri url=Uri(scheme: "tel",path: "01796165636");
+              if(await canLaunchUrl(url)){
+
+                await launchUrl(url);
+
+              }else{
+                print("Cann't launch this url");
+              }
+
+
+            },height: 30.h,width: 50.w,radius: 5.r,),
                     )
+
                   ],
                 ),
               ),
